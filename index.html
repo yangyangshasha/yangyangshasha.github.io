@@ -229,6 +229,210 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/26/jsBridge/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/26/jsBridge/" itemprop="url">jsBridge</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-26T17:10:54+08:00">
+                2019-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="JSBridge解决的问题"><a href="#JSBridge解决的问题" class="headerlink" title="JSBridge解决的问题"></a>JSBridge解决的问题</h3><p>H5 VS Native 一直是前端技术界争执不下的话题。react、vue等技术栈引领着纯H5开发，rn、week则倡导原生体验。但在项目中，经常会选择一个中立的方案：混合开发。大众称呼：Hybrid。<br>混合开发，最重要的问题是：H5和Native的双向通信。 但现实中JS和NA的交互方法非常有限，开发中如只是单纯的方法调用，既无法确保调用成功率，也无法确保代码足够简洁。于是就有了JSBridge。JSBridge，是一种JS实现的Bridge，是一种思路，可以有不同理解，不同的代码实现。主旨思想是在H5和NA之间搭建一个桥梁（Bridge），给两端留好更友好、更合理的接口。</p>
+<hr>
+<h3 id="H5和NA的双向通信通用方法"><a href="#H5和NA的双向通信通用方法" class="headerlink" title="H5和NA的双向通信通用方法"></a><strong>H5和NA的双向通信通用方法</strong></h3><p>H5通信方式和兼容性如下表所示。指的是借助Native的webview加载H5页面，H5和NA之间通过API、URL拦截、全局调用等形式，实现消息通信。</p>
+<h3 id="H5调用NA方法梳理"><a href="#H5调用NA方法梳理" class="headerlink" title="H5调用NA方法梳理"></a><strong>H5调用NA方法梳理</strong></h3><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>方法</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Android</td>
+<td>shouldOverrideUrlLoading</td>
+<td>scheme拦截方法</td>
+</tr>
+<tr>
+<td>Android</td>
+<td>addJavascriptInterface</td>
+<td>API</td>
+</tr>
+<tr>
+<td>Android</td>
+<td>onJsAlert()、onJsConfirm()、onJsPrompt（）</td>
+<td></td>
+</tr>
+<tr>
+<td>IOS</td>
+<td>拦截URL</td>
+<td></td>
+</tr>
+<tr>
+<td>IOS(UIwebview)</td>
+<td>JavaScriptCore</td>
+<td>API方法，IOS7+ 支持</td>
+</tr>
+<tr>
+<td>IOS(WKwebview)</td>
+<td>window.webkit.messageHandlers</td>
+<td>APi方法，IOS8+支持</td>
+</tr>
+</tbody>
+</table>
+<h3 id="NA调用H5方法梳理"><a href="#NA调用H5方法梳理" class="headerlink" title="NA调用H5方法梳理"></a><strong>NA调用H5方法梳理</strong></h3><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>方法</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Android</td>
+<td>loadurl()</td>
+<td></td>
+</tr>
+<tr>
+<td>Android</td>
+<td>evaluateJavascript()</td>
+<td>Android 4.4 +</td>
+</tr>
+<tr>
+<td>IOS(UIwebview)</td>
+<td>stringByEvaluatingJavaScriptFromString</td>
+</tr>
+<tr>
+<td>IOS(UIwebview)</td>
+<td>JavaScriptCore</td>
+<td>IOS7.0+</td>
+</tr>
+<tr>
+<td>IOS(Wkwebview)</td>
+<td>evaluateJavaScript:javaScriptString</td>
+<td>iOS8.0+</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="JSBridge原理"><a href="#JSBridge原理" class="headerlink" title="JSBridge原理"></a><strong>JSBridge原理</strong></h2><p>JSBridge是Native代码与JS代码的通信桥梁。目前的一种统一方案是:H5触发url scheme-&gt;Native捕获url scheme-&gt;原生分析,执行-&gt;原生调用h5。如下图<br><img src="https://dailc.github.io/staticResource/blog/hybrid/jsbridge/img_hybrid_base_jsbridgePrinciple_1.png" alt="jsbridge通讯图"><br>上图中有提到url scheme这个概念,那这到底是什么呢?</p>
+<p>url scheme是一种类似于url的链接,是为了方便app直接互相调用设计的<br>具体为,可以用系统的OpenURI打开一个类似于url的链接(可拼入参数),然后系统会进行判断,如果是系统的url scheme,则打开系统应用,否则找看是否有app注册这种scheme,打开对应app</p>
+<p>需要注意的是,这种scheme必须原生app注册后才会生效,如微信的scheme为(weixin://)</p>
+<p>而本文JSBridge中的url scheme则是仿照上述的形式的一种方式<br>具体为,app不会注册对应的scheme,而是由前端页面通过某种方式触发scheme(如用iframe.src),然后Native用某种方法捕获对应的url触发事件,然后拿到当前的触发url,根据定义好的协议,分析当前触发了那种方法,然后根据定义来执行等</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://juejin.im/post/5bda6f276fb9a0226d18931f#heading-5" target="_blank" rel="noopener">JSBridge实战</a><br><a href="https://juejin.im/post/5abca877f265da238155b6bc#comment" target="_blank" rel="noopener">JSBridge的原理</a><br><a href="https://segmentfault.com/a/1190000010356403" target="_blank" rel="noopener">有赞前端JSBridge</a><br><a href="https://www.cnblogs.com/dailc/p/5931324.html" target="_blank" rel="noopener">Hybrid APP基础篇(四)-&gt;JSBridge的原理</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/26/Grid布局/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1115,7 +1319,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
