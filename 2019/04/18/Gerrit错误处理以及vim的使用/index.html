@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="vim Gerrit,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="localstorage通讯条件：必须共享localstorage即必须同源实现方式：12345// 页面监听storage的变化window.onstorage = (e) =&amp;gt; &amp;#123;console.log(e)&amp;#125;// 或者这样window.addEventListener(&amp;apos;storage&amp;apos;, (e) =&amp;gt; console.log(e))//">
+<meta name="description" content="Gerrit，Vim, Git 起因：今天Gerrit提交代码的时候报错missing Change-Id in commit message footer，记录一下解决办法。 Gerrit 原因：某次commit的Change-Id缺失 解决方法：  找到缺失 Change-Id 的那个 commit 具体操作： git log查看（q退出git log） 执行 git rebase -i, 参">
+<meta name="keywords" content="vim Gerrit">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浏览器标签之间的通讯方式">
-<meta property="og:url" content="http://yoursite.com/2019/03/25/浏览器标签之间的通讯方式/index.html">
+<meta property="og:title" content="Gerrit错误处理以及vim的基础使用">
+<meta property="og:url" content="http://yoursite.com/2019/04/18/Gerrit错误处理以及vim的使用/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="localstorage通讯条件：必须共享localstorage即必须同源实现方式：12345// 页面监听storage的变化window.onstorage = (e) =&amp;gt; &amp;#123;console.log(e)&amp;#125;// 或者这样window.addEventListener(&amp;apos;storage&amp;apos;, (e) =&amp;gt; console.log(e))//">
+<meta property="og:description" content="Gerrit，Vim, Git 起因：今天Gerrit提交代码的时候报错missing Change-Id in commit message footer，记录一下解决办法。 Gerrit 原因：某次commit的Change-Id缺失 解决方法：  找到缺失 Change-Id 的那个 commit 具体操作： git log查看（q退出git log） 执行 git rebase -i, 参">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-25T10:01:22.650Z">
+<meta property="og:updated_time" content="2019-04-18T13:38:41.728Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浏览器标签之间的通讯方式">
-<meta name="twitter:description" content="localstorage通讯条件：必须共享localstorage即必须同源实现方式：12345// 页面监听storage的变化window.onstorage = (e) =&amp;gt; &amp;#123;console.log(e)&amp;#125;// 或者这样window.addEventListener(&amp;apos;storage&amp;apos;, (e) =&amp;gt; console.log(e))//">
+<meta name="twitter:title" content="Gerrit错误处理以及vim的基础使用">
+<meta name="twitter:description" content="Gerrit，Vim, Git 起因：今天Gerrit提交代码的时候报错missing Change-Id in commit message footer，记录一下解决办法。 Gerrit 原因：某次commit的Change-Id缺失 解决方法：  找到缺失 Change-Id 的那个 commit 具体操作： git log查看（q退出git log） 执行 git rebase -i, 参">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/25/浏览器标签之间的通讯方式/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/18/Gerrit错误处理以及vim的使用/">
 
 
 
 
 
-  <title>浏览器标签之间的通讯方式 | Hexo</title>
+  <title>Gerrit错误处理以及vim的基础使用 | Hexo</title>
   
 
 
@@ -232,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/25/浏览器标签之间的通讯方式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/18/Gerrit错误处理以及vim的使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -249,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">浏览器标签之间的通讯方式</h1>
+          <h1 class="post-title" itemprop="name headline">Gerrit错误处理以及vim的基础使用</h1>
         
 
         <div class="post-meta">
@@ -261,8 +262,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-25T12:00:22+08:00">
-                2019-03-25
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-18T21:25:06+08:00">
+                2019-04-18
               </time>
             
 
@@ -299,10 +300,30 @@
       
 
       
-        <h3 id="localstorage通讯"><a href="#localstorage通讯" class="headerlink" title="localstorage通讯"></a>localstorage通讯</h3><p>条件：必须共享localstorage即必须同源<br>实现方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 页面监听storage的变化</span><br><span class="line">window.onstorage = (e) =&gt; &#123;console.log(e)&#125;</span><br><span class="line">// 或者这样</span><br><span class="line">window.addEventListener(&apos;storage&apos;, (e) =&gt; console.log(e))</span><br><span class="line">// tips: onstorage以及storage事件，针对都是非当前页面对localStorage进行修改时才会触发，当前页面修改localStorage不会触发监听函数。然后就是在对原有的数据的值进行修改时才会触发，比如原本已经有一个key会a值为b的localStorage，你再执行：localStorage.setItem(&apos;a&apos;, &apos;b&apos;)代码，同样是不会触发监听函数的。</span><br></pre></td></tr></table></figure></p>
-<h3 id="cookie-轮询"><a href="#cookie-轮询" class="headerlink" title="cookie+轮询"></a>cookie+轮询</h3><p>条件: 同源策略<br>实现方式：不断地轮询查看cookie是否改变。（不推荐）浪费性能，并且cookie有大小限制</p>
-<h3 id="postMessage"><a href="#postMessage" class="headerlink" title="postMessage"></a>postMessage</h3><p>条件: 只能是通过iframe进行通讯<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * A窗口的域名是&lt;http://example.com:8080&gt;，以下是A窗口的script标签下的代码：</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">var popup = window.open(...popup details...);</span><br><span class="line"></span><br><span class="line">// 如果弹出框没有被阻止且加载完成</span><br><span class="line"></span><br><span class="line">// 这行语句没有发送信息出去，即使假设当前页面没有改变location（因为targetOrigin设置不对）</span><br><span class="line">popup.postMessage(&quot;The user is &apos;bob&apos; and the password is &apos;secret&apos;&quot;,</span><br><span class="line">                  &quot;https://secure.example.net&quot;);</span><br><span class="line"></span><br><span class="line">// 假设当前页面没有改变location，这条语句会成功添加message到发送队列中去（targetOrigin设置对了）</span><br><span class="line">popup.postMessage(&quot;hello there!&quot;, &quot;http://example.org&quot;);</span><br><span class="line"></span><br><span class="line">function receiveMessage(event)</span><br><span class="line">&#123;</span><br><span class="line">  // 我们能相信信息的发送者吗?  (也许这个发送者和我们最初打开的不是同一个页面).</span><br><span class="line">  if (event.origin !== &quot;http://example.org&quot;)</span><br><span class="line">    return;</span><br><span class="line"></span><br><span class="line">  // event.source 是我们通过window.open打开的弹出页面 popup</span><br><span class="line">  // event.data 是 popup发送给当前页面的消息 &quot;hi there yourself!  the secret response is: rheeeeet!&quot;</span><br><span class="line">&#125;</span><br><span class="line">window.addEventListener(&quot;message&quot;, receiveMessage, false);</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * 弹出页 popup 域名是&lt;http://example.org&gt;，以下是script标签中的代码:</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">//当A页面postMessage被调用后，这个function被addEventListenner调用</span><br><span class="line">function receiveMessage(event)</span><br><span class="line">&#123;</span><br><span class="line">  // 我们能信任信息来源吗？</span><br><span class="line">  if (event.origin !== &quot;http://example.com:8080&quot;)</span><br><span class="line">    return;</span><br><span class="line"></span><br><span class="line">  // event.source 就当前弹出页的来源页面</span><br><span class="line">  // event.data 是 &quot;hello there!&quot;</span><br><span class="line"></span><br><span class="line">  // 假设你已经验证了所受到信息的origin (任何时候你都应该这样做), 一个很方便的方式就是把enent.source</span><br><span class="line">  // 作为回信的对象，并且把event.origin作为targetOrigin</span><br><span class="line">  event.source.postMessage(&quot;hi there yourself!  the secret response &quot; + &quot;is: rheeeeet!&quot;, event.origin);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">window.addEventListener(&quot;message&quot;, receiveMessage, false);</span><br></pre></td></tr></table></figure>
+        <h2 id="Gerrit，Vim-Git"><a href="#Gerrit，Vim-Git" class="headerlink" title="Gerrit，Vim, Git"></a>Gerrit，Vim, Git</h2><hr>
+<p>起因：今天Gerrit提交代码的时候报错missing Change-Id in commit message footer，记录一下解决办法。</p>
+<h3 id="Gerrit"><a href="#Gerrit" class="headerlink" title="Gerrit"></a>Gerrit</h3><hr>
+<p>原因：某次commit的Change-Id缺失</p>
+<p>解决方法：</p>
+<ol>
+<li>找到缺失 Change-Id 的那个 commit 具体操作： git log查看（q退出git log）</li>
+<li>执行 git rebase -i, 参数为 该提交的上一个提交的 commit-id(缺少Change-Id的下一行就是)<br>会用vim打开文件，找出其中缺失Change-Id的记录 将pick改为reword 保存退出（:wq）</li>
+<li>上一步打开的文件保存退出后,git会逐个打开被你标注了 reword 的提交日志页面.不需要修改任何东西,逐个保存退出即可 (一路 :wq)</li>
+<li>用 git log 查看提交日志,会发现缺失的 Change-Id 都生成了. 愉快的提交代码吧!（git push review HEAD:refs/for/dev）</li>
+</ol>
+<h3 id="Vim基础使用"><a href="#Vim基础使用" class="headerlink" title="Vim基础使用"></a>Vim基础使用</h3><hr>
+<pre><code>a,i,r: 进去insert模式
+:wq:   保存退出
+:q!    不保存退出
+yy     复制当前行的内容
+yyp    复制当前行到下一行，此复制不会放到剪切板中
+ddp    当前行和下一行互换位置
+</code></pre><h3 id="Git的常用命令"><a href="#Git的常用命令" class="headerlink" title="Git的常用命令"></a>Git的常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- git status          查看状态</span><br><span class="line">- git log             查看log q退出</span><br><span class="line">- git stash save &apos;&apos;   储存当前代码</span><br><span class="line">- git stash pop       取出储存的代码</span><br><span class="line">- git commit --amend  修改最近一次的提交的记录(自动进入vim编辑)</span><br></pre></td></tr></table></figure>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接:"></a>参考链接:</h4><ol>
+<li><a href="https://blog.csdn.net/liuxu0703/article/details/54343096" target="_blank" rel="noopener">三种方法处理Gerrit错误(missing Change-Id)</a></li>
+<li><a href="https://www.jianshu.com/p/dde77e3b299f" target="_blank" rel="noopener">vim的常用命令</a></li>
+</ol>
+
       
     </div>
     
@@ -317,6 +338,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/vim-Gerrit/" rel="tag"># vim Gerrit</a>
+          
+        </div>
+      
 
       
       
@@ -326,8 +353,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/19/微信小程序/" rel="next" title="微信小程序优化策略">
-                <i class="fa fa-chevron-left"></i> 微信小程序优化策略
+              <a href="/2019/03/26/jsBridge/" rel="next" title="jsBridge">
+                <i class="fa fa-chevron-left"></i> jsBridge
               </a>
             
           </div>
@@ -335,10 +362,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/25/comet与SSE/" rel="prev" title="comet与SSE">
-                comet与SSE <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -461,7 +484,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#localstorage通讯"><span class="nav-number">1.</span> <span class="nav-text">localstorage通讯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie-轮询"><span class="nav-number">2.</span> <span class="nav-text">cookie+轮询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#postMessage"><span class="nav-number">3.</span> <span class="nav-text">postMessage</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gerrit，Vim-Git"><span class="nav-number">1.</span> <span class="nav-text">Gerrit，Vim, Git</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gerrit"><span class="nav-number">1.1.</span> <span class="nav-text">Gerrit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vim基础使用"><span class="nav-number">1.2.</span> <span class="nav-text">Vim基础使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git的常用命令"><span class="nav-number">1.3.</span> <span class="nav-text">Git的常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参考链接"><span class="nav-number">1.3.1.</span> <span class="nav-text">参考链接:</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

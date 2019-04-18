@@ -229,6 +229,148 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/18/Gerrit错误处理以及vim的使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/18/Gerrit错误处理以及vim的使用/" itemprop="url">Gerrit错误处理以及vim的基础使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-18T21:25:06+08:00">
+                2019-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Gerrit，Vim-Git"><a href="#Gerrit，Vim-Git" class="headerlink" title="Gerrit，Vim, Git"></a>Gerrit，Vim, Git</h2><hr>
+<p>起因：今天Gerrit提交代码的时候报错missing Change-Id in commit message footer，记录一下解决办法。</p>
+<h3 id="Gerrit"><a href="#Gerrit" class="headerlink" title="Gerrit"></a>Gerrit</h3><hr>
+<p>原因：某次commit的Change-Id缺失</p>
+<p>解决方法：</p>
+<ol>
+<li>找到缺失 Change-Id 的那个 commit 具体操作： git log查看（q退出git log）</li>
+<li>执行 git rebase -i, 参数为 该提交的上一个提交的 commit-id(缺少Change-Id的下一行就是)<br>会用vim打开文件，找出其中缺失Change-Id的记录 将pick改为reword 保存退出（:wq）</li>
+<li>上一步打开的文件保存退出后,git会逐个打开被你标注了 reword 的提交日志页面.不需要修改任何东西,逐个保存退出即可 (一路 :wq)</li>
+<li>用 git log 查看提交日志,会发现缺失的 Change-Id 都生成了. 愉快的提交代码吧!（git push review HEAD:refs/for/dev）</li>
+</ol>
+<h3 id="Vim基础使用"><a href="#Vim基础使用" class="headerlink" title="Vim基础使用"></a>Vim基础使用</h3><hr>
+<pre><code>a,i,r: 进去insert模式
+:wq:   保存退出
+:q!    不保存退出
+yy     复制当前行的内容
+yyp    复制当前行到下一行，此复制不会放到剪切板中
+ddp    当前行和下一行互换位置
+</code></pre><h3 id="Git的常用命令"><a href="#Git的常用命令" class="headerlink" title="Git的常用命令"></a>Git的常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- git status          查看状态</span><br><span class="line">- git log             查看log q退出</span><br><span class="line">- git stash save &apos;&apos;   储存当前代码</span><br><span class="line">- git stash pop       取出储存的代码</span><br><span class="line">- git commit --amend  修改最近一次的提交的记录(自动进入vim编辑)</span><br></pre></td></tr></table></figure>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接:"></a>参考链接:</h4><ol>
+<li><a href="https://blog.csdn.net/liuxu0703/article/details/54343096" target="_blank" rel="noopener">三种方法处理Gerrit错误(missing Change-Id)</a></li>
+<li><a href="https://www.jianshu.com/p/dde77e3b299f" target="_blank" rel="noopener">vim的常用命令</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/26/jsBridge/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1319,7 +1461,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1327,6 +1469,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
             
 
           </nav>
